@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
     const contentDiv = document.getElementById('content');
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
 
     // Function to render the analysis results
     function renderAnalysis(data) {
@@ -63,11 +63,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     // Get the stored analysis for the current tab
-    const result = await chrome.storage.local.get([`${tab.id}`]);
+    const result = await browser.storage.local.get([`${tab.id}`]);
     renderAnalysis(result[tab.id]);
 
     // Listen for storage changes to update the popup in real-time
-    chrome.storage.onChanged.addListener((changes, area) => {
+    browser.storage.onChanged.addListener((changes, area) => {
         if (area === 'local' && changes[tab.id]) {
             renderAnalysis(changes[tab.id].newValue);
         }
