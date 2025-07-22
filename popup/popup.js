@@ -1,14 +1,13 @@
-// popup/popup.js
+
 
 document.addEventListener('DOMContentLoaded', async () => {
     const contentDiv = document.getElementById('content');
     const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
 
-    // Function to render the analysis results
     function renderAnalysis(data) {
         const contentDiv = document.getElementById('content');
 
-    // Handle errors or no data
+    
     if (!data || !data.analysis) {
         const message = (data && data.error) ? data.error : 'Click the "Analyze Terms" button on a page to start.';
         contentDiv.innerHTML = `<p class="default-message">${message}</p>`;
@@ -17,18 +16,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const { riskScore, verdict, categorizedPoints } = data.analysis;
 
-    // --- Determine colors for verdict and risk bar ---
-    let riskColor = '#F1C40F'; // Default Yellow
+   
+    let riskColor = '#F1C40F'; 
     let verdictClass = 'verdict-warn';
     if (riskScore <= 3) {
-        riskColor = '#2ECC71'; // Green
+        riskColor = '#2ECC71';
         verdictClass = 'verdict-good';
     } else if (riskScore > 7) {
-        riskColor = '#E74C3C'; // Red
+        riskColor = '#E74C3C'; 
         verdictClass = 'verdict-bad';
     }
     
-    // --- Map categories to icons ---
+    
     const categoryIcons = {
         "Data Collection": "📊",
         "Data Sharing": "🤝",
@@ -37,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         "Policy Changes": "🔄"
     };
 
-    // --- Build the new HTML ---
+    
     let html = `
         <div class="verdict-card ${verdictClass}">
             <h3>The Verdict</h3>
@@ -62,11 +61,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     contentDiv.innerHTML = html;
     }
     
-    // Get the stored analysis for the current tab
+    
     const result = await browser.storage.local.get([`${tab.id}`]);
     renderAnalysis(result[tab.id]);
 
-    // Listen for storage changes to update the popup in real-time
+    
     browser.storage.onChanged.addListener((changes, area) => {
         if (area === 'local' && changes[tab.id]) {
             renderAnalysis(changes[tab.id].newValue);

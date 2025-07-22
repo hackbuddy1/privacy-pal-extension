@@ -1,8 +1,8 @@
-// scripts/content.js
 
 
 
-// --- Function to create the button ---
+
+
 function injectAnalysisButton() {
     if (document.getElementById('privacy-pal-button')) return;
 
@@ -11,7 +11,7 @@ function injectAnalysisButton() {
     button.innerHTML = `<span class="pp-logo-span">PP</span><span>Analyze Terms</span>`;
     document.body.appendChild(button);
     
-    // --- Styles for the button and highlights ---
+    
     const style = document.createElement('style');
     style.innerHTML = `
       #privacy-pal-button {
@@ -39,18 +39,17 @@ function injectAnalysisButton() {
     `;
     document.head.appendChild(style);
 
-    // --- Button click listener ---
+    
     button.addEventListener('click', () => {
         button.disabled = true;
         button.innerHTML = `<div class="spinner"></div><span>Analyzing...</span>`;
         const pageText = document.body.innerText;
-        // --- THIS IS THE FIX for the "out of scope" error ---
-        // We just send the message. We DO NOT expect a response from this call.
+        
         browser.runtime.sendMessage({ type: "ANALYZE_PAGE", text: pageText });
     });
 }
 
-// --- Function to highlight text ---
+
 function highlightTextOnPage(highlights) {
     const body = document.body;
     let content = body.innerHTML;
@@ -70,7 +69,7 @@ function escapeRegex(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-// --- Message listener from background script ---
+
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === "HIGHLIGHT_TEXT") {
         highlightTextOnPage(message.highlights);
@@ -83,22 +82,19 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 
-// --- Function to decide if the button should be shown ---
+
 function isLikelyTermsPage() {
     const url = window.location.href.toLowerCase();
     const title = document.title.toLowerCase();
-    // Check a larger chunk of text for dynamic pages
+    
     const bodyText = document.body.innerText.toLowerCase().substring(0, 2000);
     const keywords = ['terms of service', 'terms and conditions', 'privacy policy', 'legal terms', 'end-user agreement', 'terms of use'];
     return keywords.some(k => url.includes(k.replace(/ /g, '-')) || title.includes(k) || bodyText.includes(k));
 }
 
-// ==========================================================
-// ▼▼▼ THIS IS THE FIX for the button not appearing ▼▼▼
-// ==========================================================
-// Run after a short delay to allow dynamic pages (like Spotify) to load their content.
+
 setTimeout(() => {
     if (isLikelyTermsPage()) {
         injectAnalysisButton();
     }
-}, 1500); // Wait 1.5 seconds
+}, 1500); 

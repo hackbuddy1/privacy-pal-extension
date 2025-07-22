@@ -1,6 +1,4 @@
-/* popup/popup.css */
 
-/* --- General Body & Font Styling --- */
 body {
     background-color: #18191A;
     color: #EAEAEA;
@@ -19,7 +17,7 @@ h3 {
     margin: 20px 0 10px 0;
 }
 
-/* --- Header --- */
+
 .header {
     display: flex;
     align-items: center;
@@ -46,7 +44,7 @@ h1 {
     margin: 0;
 }
 
-/* --- NEW: Verdict Section --- */
+
 .verdict-card {
     border-radius: 10px;
     padding: 15px;
@@ -63,15 +61,15 @@ h1 {
     font-size: 16px;
     font-weight: 500;
 }
-/* Color styles for verdict */
+
 .verdict-good { border-color: #2ECC71; background-color: rgba(46, 204, 113, 0.1); }
 .verdict-warn { border-color: #F1C40F; background-color: rgba(241, 196, 15, 0.1); }
 .verdict-bad { border-color: #E74C3C; background-color: rgba(231, 76, 60, 0.1); }
 
-/* --- Risk Meter --- */
+
 .risk-meter { background-color: #333; 
     border-radius: 8px; 
-    /* ▼▼▼ Make the bar taller ▼▼▼ */
+   
     height: 24px; 
     width: 100%; 
     overflow: hidden; }
@@ -86,12 +84,12 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #18191A; /* Dark text for contrast */
+    color: #18191A; 
     font-weight: 700;
     font-size: 13px;
 }
 
-/* --- NEW: Categorized Points List --- */
+
 .category-list {
     margin-top: 10px;
 }
@@ -115,5 +113,5 @@ h1 {
     color: #EAEAEA;
 }
 
-/* --- Default Message Styling --- */
+
 .default-message { color: #909296; text-align: center; padding: 20px; }
